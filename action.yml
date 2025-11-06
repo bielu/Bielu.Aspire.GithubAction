@@ -6,6 +6,9 @@ branding:
   color: "blue"
 
 inputs:
+  action:
+    description: "Action to perform with aspire i.e Install (installs aspire cli), Publish (publishes project)"
+    required: false
 
 runs:
   using: "composite"
@@ -13,16 +16,10 @@ runs:
     - shell: bash
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
-          bash "${{ github.action_path }}\\action.sh"
+          pwsh "${{ github.action_path }}\\action.ps1"
         else
           bash ${{ github.action_path }}/action.sh
         fi
       env:
-        config: "${{inputs.config}}"
-        repositoryLink: "${{inputs.repositoryLink}}"
-        owner: "${{inputs.owner}}"
-        name: "${{inputs.name}}"
-        token: "${{inputs.token}}"
-        force_cleartext_storage: "${{inputs.force-cleartext-storage}}"
-        GITHUB_TOKEN: ${{github.token}}
+        action: "${{inputs.action}}"
         DOTNET_NOLOGO: "1"

@@ -1,0 +1,28 @@
+name: 'Bielu Aspire Github Actions'
+description: 'This actions simplify working with aspire on github actions'
+
+branding:
+  icon: "lock"
+  color: "blue"
+
+inputs:
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          bash "${{ github.action_path }}\\action.sh"
+        else
+          bash ${{ github.action_path }}/action.sh
+        fi
+      env:
+        config: "${{inputs.config}}"
+        repositoryLink: "${{inputs.repositoryLink}}"
+        owner: "${{inputs.owner}}"
+        name: "${{inputs.name}}"
+        token: "${{inputs.token}}"
+        force_cleartext_storage: "${{inputs.force-cleartext-storage}}"
+        GITHUB_TOKEN: ${{github.token}}
+        DOTNET_NOLOGO: "1"

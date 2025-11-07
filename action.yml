@@ -8,7 +8,18 @@ branding:
 inputs:
   action:
     description: "Action to perform with aspire i.e Install (installs aspire cli), Publish (publishes project)"
+    required: true
+  project:
+    description: "The path to the Aspire AppHost project file."
     required: false
+  output:
+    description: "The output path for the generated artifacts. Defaults to './aspire-output' if not specified."
+    default: "'./aspire-outpu"
+  debug:
+    description: "Enable debug logging to the console."
+    required: false
+    default: "false"
+
 
 runs:
   using: "composite"

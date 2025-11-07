@@ -8,7 +8,7 @@ main(){
     curl -sSL https://aspire.dev/install.sh | bash;
 
     ;;
-  install)
+  publish)
     echo -n "publishing aspire project";
     cmd_string="aspire publish"
     if [[ -n $PROJECT ]]; then

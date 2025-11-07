@@ -17,8 +17,11 @@ main(){
     if [[ -n $output ]]; then
       cmd_string += " --output-pat $output"
     fi
-    if [[ "$DEBUG" == "true" ]]; then
+    if [[ "$debug" == "true" ]]; then
       cmd_string += " --debug"
+    fi
+    if [[ -n $buildConfiguration ]]; then
+      cmd_string += " /p:configuration $buildConfiguration"
     fi
     result=$($cmd_string)
     echo $result

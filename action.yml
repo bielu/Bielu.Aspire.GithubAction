@@ -19,7 +19,10 @@ inputs:
     description: "Enable debug logging to the console."
     required: false
     default: "false"
-
+  buildConfiguration:
+    description: "Dotnet build configuraiton e.i Release, Debug."
+    required: false
+    default: "Release"
 
 runs:
   using: "composite"

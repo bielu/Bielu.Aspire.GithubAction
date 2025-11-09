@@ -23,6 +23,7 @@ main(){
     if [[ -n $buildConfiguration ]]; then
       cmd_string += " /p:configuration $buildConfiguration"
     fi
+    echo $cmd_string;
     result=$($cmd_string)
     echo $result
     ;;

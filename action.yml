@@ -2,38 +2,48 @@ name: 'Bielu Aspire Github Actions'
 description: 'This actions simplify working with aspire on github actions'
 
 branding:
-  icon: "lock"
+  icon: "upload-cloud"
   color: "blue"
 
 inputs:
   action:
-    description: "Action to perform with aspire i.e Install (installs aspire cli), Publish (publishes project)"
+    description: "Action to perform: install or publish."
     required: true
+    default: "install"
+
   project:
-    description: "The path to the Aspire AppHost project file."
+    description: "The Aspire project name or path to publish."
     required: false
+    default: ""
+
   output:
-    description: "The output path for the generated artifacts. Defaults to './aspire-output' if not specified."
-    default: "'./aspire-outpu"
+    description: "The output path for publish artifacts."
+    required: false
+    default: ""
+
   debug:
-    description: "Enable debug logging to the console."
+    description: "Enable debug mode (true/false)."
     required: false
     default: "false"
-  buildConfiguration:
-    description: "Dotnet build configuraiton e.i Release, Debug."
+
+  build-configuration:
+    description: "The build configuration (e.g., Release or Debug)."
     required: false
-    default: "Release"
+    default: ""
 
 runs:
   using: "composite"
   steps:
-    - shell: bash
+    - name: Run Aspire Script
       run: |
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          pwsh "${{ github.action_path }}\\action.ps1"
+        if [ "$RUNNER_OS" = "Windows" ]; then
+          pwsh "${{ github.action_path }}\action.ps1" -Action "${{ inputs.action }}"
         else
-          bash ${{ github.action_path }}/action.sh
+          bash "${{ github.action_path }}/action.sh" "${{ inputs.action }}"
         fi
+      shell: bash
       env:
-        action: "${{inputs.action}}"
-        DOTNET_NOLOGO: "1"
+        PROJECT: "${{ inputs.project }}"
+        OUTPUT: "${{ inputs.output }}"
+        DEBUG: "${{ inputs.debug }}"
+        BUILD_CONFIGURATION: "${{ inputs.build-configuration }}"
